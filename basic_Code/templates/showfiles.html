@@ -1,0 +1,17 @@
+{% extends "layout.html"%} {% block content%}
+
+<h1>Show</h1>
+
+
+
+        {% for i in show_doc %} {{i.id}}. Name :{{ i.name }} <br> data: {{i.data}}
+        <br>
+        <hr>
+        {% endfor %}
+
+
+
+<h2>The end</h2>
+
+
+{% endblock%}

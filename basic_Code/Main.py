@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 
@@ -36,6 +37,12 @@ class History(db.Model):
     createdby_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
+class Files(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    data= db.Column(db.LargeBinary)
+    createdby_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
 class UserProfile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
@@ -51,6 +58,7 @@ class UserProfile(db.Model):
 class Doctor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50))
+    department = db.Column(db.String(50))
     password = db.Column(db.String(50))
 
 
@@ -103,6 +111,13 @@ def show():
     return render_template('show.html', show_user=show_user, show_doc=show_doc)
 
 
+@app.route('/showfiles')
+def showfiles():
+    show_doc = Files.query.all()
+
+    return render_template('showfiles.html',  show_doc=show_doc)
+
+
 @app.route('/showAppointment')
 def showAppointment():
     show_appointment = Appointment.query.all()
@@ -141,7 +156,22 @@ def appointment():
         db.session.commit()
         return redirect(url_for('index'))
     else:
-        return render_template('appointment.html')
+        show_doc = Doctor.query.all()
+        return render_template('appointment.html', show_doc=show_doc)
+
+
+# @app.route("/upload-image", methods=["GET", "POST"])
+# def upload_image():
+#     if request.method == "POST":
+#         if request.files:
+#             file = request.files["file"]
+#             print(file)
+#             new_file= Files(name=file.filename, data=file.read())
+#             db.session.add(new_file)
+#             db.session.commit()
+#             return redirect(request.url)
+#
+#     return render_template("upload_image.html")
 
 
 @app.route('/editProfile', methods=['GET', 'POST'])
@@ -151,10 +181,10 @@ def editProfile():
         print(user_id)
 
         new_profile = UserProfile(name=request.form['name'],
-                              age=request.form['age'],
-                              gender=request.form['gender'], bloodGroup=request.form['bloodGroup'],
-                              heredityIssues=request.form['heredityIssues'],
-                              contactNumber=request.form['contactNumber'], createdby_id=user_id)
+                                  age=request.form['age'],
+                                  gender=request.form['gender'], bloodGroup=request.form['bloodGroup'],
+                                  heredityIssues=request.form['heredityIssues'],
+                                  contactNumber=request.form['contactNumber'], createdby_id=user_id)
 
         db.session.add(new_profile)
         db.session.commit()
@@ -163,12 +193,12 @@ def editProfile():
         return render_template('editProfile.html')
 
 
-
 @app.route('/profile')
 def profile():
     id = session['user']
     Profile = UserProfile.query.filter_by(createdby_id=id).all()
     return render_template('profile.html', Profile=Profile)
+
 
 @app.route('/history', methods=['GET', 'POST'])
 def history():
@@ -219,7 +249,7 @@ def dlogin():
 @app.route('/dregister/', methods=['GET', 'POST'])
 def dregister():
     if request.method == 'POST':
-        new_user = Doctor(username=request.form['username'],
+        new_user = Doctor(username=request.form['username'], department=request.form['department'],
                           password=request.form['password'])
         db.session.add(new_user)
         db.session.commit()
