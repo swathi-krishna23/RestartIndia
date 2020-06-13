@@ -10,6 +10,13 @@ Time: {{i.time}} <br> Mode : {{i.mode}} <br>status {{i.status}}
 <br>
 
 
+<button type="submit" class="btn btn-default " value="{{ i.id }} ">
+    <a href="{{ url_for('ConfirmAppointment', id=i.id) }}">Confirm  </a>
+</button>
+
+<button type="submit" class="btn btn-default " value="{{ i.id }} ">
+    <a href="{{ url_for('CancelAppointment', id=i.id) }}">Cancel </a>
+</button>
 <br>
 <hr>
 
@@ -17,7 +24,6 @@ Time: {{i.time}} <br> Mode : {{i.mode}} <br>status {{i.status}}
 {% endfor %}
 
 
-<!-- Modal -->
 
 
 <h2>The end</h2>

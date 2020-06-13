@@ -96,9 +96,16 @@ def showAppointment():
 def index():
     username = User.query.get(session['user']).username
     print(username)
-    myAppointments = Appointment.query.filter_by(createdby_name=username).all()
+    myAppointments = Appointment.query.filter_by(createdby_name=username).filter_by(status='Confirmed').all()
     return render_template('index.html',myAppointments=myAppointments)
 
+
+@app.route('/UserviewAppointments')
+def UserviewAppointments():
+    username = User.query.get(session['user']).username
+    print(username)
+    myAppointments = Appointment.query.filter_by(createdby_name=username).all()
+    return render_template('UserviewAppointments.html',myAppointments=myAppointments)
 
 @app.route('/appointment', methods=['GET', 'POST'])
 def appointment():
@@ -159,7 +166,10 @@ def dlogout():
 
 @app.route('/dindex')
 def dindex():
-    return render_template('dindex.html')
+    docname = Doctor.query.get(session['doctor']).username
+    print(docname)
+    myAppointments = Appointment.query.filter_by(docName=docname).filter_by(status='Confirmed').all()
+    return render_template('dindex.html', myAppointments=myAppointments)
 
 
 @app.route('/viewAppointments')
@@ -189,6 +199,17 @@ def CancelAppointment():
     CancelAppointment.status='Denied'
     db.session.commit()
     return redirect(url_for('dindex'))
+
+
+@app.route('/notification')
+def Notification():
+    doctor_id = session['doctor']
+    docname = Doctor.query.get(doctor_id).username
+    myAppointments = Appointment.query.filter_by(docName=docname).filter_by(status='Pending').all()
+    print('notification', myAppointments)
+    return render_template('notification.html', myAppointments=myAppointments)
+
+
 
 ######################################### MAIN ####################################
 

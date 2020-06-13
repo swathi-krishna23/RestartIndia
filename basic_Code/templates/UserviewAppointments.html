@@ -1,12 +1,14 @@
-{% extends "doc_layout.html"%} {% block content%}
+{% extends "layout.html"%} {% block content%}
 
 <h1>Show</h1>
 
 
 {% for i in myAppointments %} <b>{{i.id}}</b> .
-<br> Dr {{ i.docName }}, {{i.createdby_name}} wants to book an appointment on
+<br> {{ i.docName }} <br>
 Date: {{i.date}} <br>
 Time: {{i.time}} <br> Mode : {{i.mode}} <br>status {{i.status}}
+
+by :{{i.createdby_name}}
 <br>
 
 

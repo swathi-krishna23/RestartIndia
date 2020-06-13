@@ -3,6 +3,15 @@
 
 <h1>DOCTOR Index</h1>
 
+<h1>Upcoming Consulation</h1>
+
+
+{% for i in myAppointments %} Dr {{ i.createdby_name }} <br>
+<hr>
+Date: {{i.date}} <br>
+Time: {{i.time}} <br> Mode : {{i.mode}} <br>
+
+{% endfor %}
 
 
 {% endblock%}

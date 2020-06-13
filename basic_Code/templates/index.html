@@ -1,7 +1,7 @@
 {% extends "layout.html"%}
 {% block content%}
 
-<h1>Index</h1>
+<h1>Upcoming Consulation</h1>
 
 
 {% for i in myAppointments %} Dr {{ i.docName }} <br>
@@ -9,7 +9,7 @@
 Date: {{i.date}} <br>
 Time: {{i.time}} <br> Mode : {{i.mode}} <br>
 
-<button type="button" class="btn btn-danger ">{{i.status}}
+<button type="button" class="btn btn-primary ">{{i.status}}
 </button>
 <br>
 <br>
