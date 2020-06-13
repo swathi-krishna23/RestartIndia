@@ -1,0 +1,19 @@
+{% extends "doc_layout.html"%}
+{% block content%}
+
+<h1>DOCTOR Index</h1>
+
+<h1>Upcoming Consulation</h1>
+
+
+{% for i in myAppointments %} Patient: {{i.createdby_id}}  {{ i.createdby_name }}
+<hr>
+Date: {{i.date}} <br>
+Time: {{i.time}} <br> Mode : {{i.mode}} <br>
+<br>
+<a href="dviewhistory.html">View Medical History</a>
+
+{% endfor %}
+
+
+{% endblock%}
