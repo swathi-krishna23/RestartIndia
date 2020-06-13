@@ -77,6 +77,7 @@ class Feedback(db.Model):
     doc_name = db.Column(db.String(50))
     feedback = db.Column(db.String(50))
     medicines_to_be_taken = db.Column(db.String(50))
+    consultation_fee = db.Column(db.Integer)
     doc_who_created_it = db.Column(db.Integer, db.ForeignKey('doctor.id'))
     patient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -269,6 +270,8 @@ def history():
 #     return render_template('viewhistory.html', history=history)
 
 
+
+
 ######################################### ROUTES FOR THE DOCTORS ####################################
 
 # *****  DOCTOR SIDE *****
@@ -375,6 +378,7 @@ def feedback():
         details = Feedback(patient_name=request.form['patient_name'], doc_name=docname,
                            feedback=request.form['feedback'],
                            medicines_to_be_taken=request.form['medicines_to_be_taken'],
+                           consultation_fee=request.form['consultation_fee'],
                            doc_who_created_it=doc_id, patient_id=user_id)
         db.session.add(details)
         db.session.commit()
