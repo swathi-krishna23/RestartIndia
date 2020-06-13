@@ -28,11 +28,19 @@ class Appointment(db.Model):
     status = db.Column(db.String(50), default='Pending')
 
 
-class History(db.Model):
+class Diseases(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     desc = db.Column(db.String(50))
     allergy = db.Column(db.String(50))
-    med = db.Column(db.String(50))
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    createdby_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+class Medicines(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    dose = db.Column(db.Integer)
+    medicine = db.Column(db.String(50))
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     createdby_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -40,8 +48,9 @@ class History(db.Model):
 class Files(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
-    data= db.Column(db.LargeBinary)
+    data = db.Column(db.LargeBinary)
     createdby_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
 
 class UserProfile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -115,7 +124,7 @@ def show():
 def showfiles():
     show_doc = Files.query.all()
 
-    return render_template('showfiles.html',  show_doc=show_doc)
+    return render_template('showfiles.html', show_doc=show_doc)
 
 
 @app.route('/showAppointment')
@@ -200,28 +209,52 @@ def profile():
     return render_template('profile.html', Profile=Profile)
 
 
-@app.route('/history', methods=['GET', 'POST'])
-def history():
+@app.route('/diseases', methods=['GET', 'POST'])
+def diseases():
     id = session['user']
     user_id = User.query.get(id)
     if request.method == 'POST':
-        details = History(desc=request.form['desc'],
-                          allergy=request.form['allergy'],
-                          med=request.form['med'],
-                          createdby_id=id)
+        details = Diseases(desc=request.form['desc'],
+                           allergy=request.form['allergy'],
+                           createdby_id=id)
         db.session.add(details)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('history'))
     else:
-        return render_template('history.html')
+        return render_template('diseases.html')
 
 
-@app.route('/viewhistory')
-def viewhistory():
+@app.route('/medicines', methods=['GET', 'POST'])
+def medicines():
+    id = session['user']
+    user_id = User.query.get(id)
+    if request.method == 'POST':
+        details = Medicines(name=request.form['name'],
+                            dose=request.form['dose'],
+                            medicine=request.form['medicine'],
+                            createdby_id=id)
+        db.session.add(details)
+        db.session.commit()
+        return redirect(url_for('history'))
+    else:
+        return render_template('medicines.html')
+
+
+
+@app.route('/history')
+def history():
     id = session['user']
     print(id)
-    history = History.query.filter_by(createdby_id=id).all()
-    return render_template('viewhistory.html', history=history)
+    diseases= Diseases.query.filter_by(createdby_id=id).all()
+    medicines = Medicines.query.filter_by(createdby_id=id).all()
+    return render_template('history.html', diseases=diseases, medicines=medicines)
+
+# @app.route('/viewhistory')
+# def viewhistory():
+#     id = session['user']
+#     print(id)
+#     history = History.query.filter_by(createdby_id=id).all()
+#     return render_template('viewhistory.html', history=history)
 
 
 ######################################### ROUTES FOR THE DOCTORS ####################################
@@ -268,6 +301,7 @@ def dindex():
     docname = Doctor.query.get(session['doctor']).username
     print(docname)
     myAppointments = Appointment.query.filter_by(docName=docname).filter_by(status='Confirmed').all()
+    print(myAppointments)
     return render_template('dindex.html', myAppointments=myAppointments)
 
 
@@ -309,6 +343,15 @@ def Notification():
     myAppointments = Appointment.query.filter_by(docName=docname).filter_by(status='Pending').all()
     print('notification', myAppointments)
     return render_template('notification.html', myAppointments=myAppointments)
+
+
+@app.route('/doc_view_history')
+def doc_view_history():
+    id = int(request.args['id'])
+    print('toview_history ', id)
+    diseases= Diseases.query.filter_by(createdby_id=id).all()
+    medicines = Medicines.query.filter_by(createdby_id=id).all()
+    return render_template('doc_view_history.html', diseases=diseases, medicines=medicines)
 
 
 ######################################### MAIN ####################################
