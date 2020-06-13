@@ -71,6 +71,16 @@ class Doctor(db.Model):
     password = db.Column(db.String(50))
 
 
+class Feedback(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_name = db.Column(db.String(50))
+    doc_name = db.Column(db.String(50))
+    feedback = db.Column(db.String(50))
+    medicines_to_be_taken = db.Column(db.String(50))
+    doc_who_created_it = db.Column(db.Integer, db.ForeignKey('doctor.id'))
+    patient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
 ################################  REGISTER  LOGIN  LOGOUT ROUTES ###################################
 
 
@@ -139,8 +149,9 @@ def showAppointment():
 def index():
     username = User.query.get(session['user']).username
     print(username)
+    show_doc = Doctor.query.all()
     myAppointments = Appointment.query.filter_by(createdby_name=username).filter_by(status='Confirmed').all()
-    return render_template('index.html', myAppointments=myAppointments)
+    return render_template('index.html', myAppointments=myAppointments,show_doc=show_doc)
 
 
 @app.route('/UserviewAppointments')
@@ -165,8 +176,8 @@ def appointment():
         db.session.commit()
         return redirect(url_for('index'))
     else:
-        show_doc = Doctor.query.all()
-        return render_template('appointment.html', show_doc=show_doc)
+
+        return render_template('appointment.html')
 
 
 # @app.route("/upload-image", methods=["GET", "POST"])
@@ -240,14 +251,15 @@ def medicines():
         return render_template('medicines.html')
 
 
-
 @app.route('/history')
 def history():
     id = session['user']
     print(id)
-    diseases= Diseases.query.filter_by(createdby_id=id).all()
+    diseases = Diseases.query.filter_by(createdby_id=id).all()
     medicines = Medicines.query.filter_by(createdby_id=id).all()
-    return render_template('history.html', diseases=diseases, medicines=medicines)
+    feedback = Feedback.query.filter_by(patient_id=id).all()
+    return render_template('history.html', diseases=diseases, medicines=medicines, feedback=feedback)
+
 
 # @app.route('/viewhistory')
 # def viewhistory():
@@ -349,9 +361,26 @@ def Notification():
 def doc_view_history():
     id = int(request.args['id'])
     print('toview_history ', id)
-    diseases= Diseases.query.filter_by(createdby_id=id).all()
+    diseases = Diseases.query.filter_by(createdby_id=id).all()
     medicines = Medicines.query.filter_by(createdby_id=id).all()
     return render_template('doc_view_history.html', diseases=diseases, medicines=medicines)
+
+
+@app.route('/feedback', methods=['GET', 'POST'])
+def feedback():
+    doc_id = session['user']
+    docname = Doctor.query.get(doc_id).username
+    user_id = int(request.args['id'])
+    if request.method == 'POST':
+        details = Feedback(patient_name=request.form['patient_name'], doc_name=docname,
+                           feedback=request.form['feedback'],
+                           medicines_to_be_taken=request.form['medicines_to_be_taken'],
+                           doc_who_created_it=doc_id, patient_id=user_id)
+        db.session.add(details)
+        db.session.commit()
+        return redirect(url_for('dindex'))
+    else:
+        return render_template('feedback.html')
 
 
 ######################################### MAIN ####################################

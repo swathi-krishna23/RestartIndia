@@ -3,7 +3,7 @@
 <h1>History</h1>
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-4">
         <h1>Disease</h1>
         {% for h in diseases %}
         Description {{h.desc}}
@@ -11,7 +11,7 @@
         {% endfor %}
 
     </div>
-    <div class="col-6">
+    <div class="col-4">
         <h1>Medicine</h1>
         {% for m in medicines %}
         Name {{m.name}}
@@ -22,6 +22,18 @@
         <br> <br> <br> <br>
         <hr>
         {% endfor %}
+    </div>
+    <div class="col-4">
+         <h1>Previous feedbacks</h1>
+        {% for f in feedback %}
+        Feedback {{f.feedback}}
+        <br>
+        Given by {{f.doc_name}}
+        <br>
+        Medicine : {{f.medicines_to_be_taken}}
+        <br> <br> <br> <br>
+        <hr>
+          {% endfor %}
     </div>
 </div>
 

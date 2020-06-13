@@ -6,11 +6,8 @@
     <div class="col-12">
         <h1>Book appointment</h1>
 
-        <h3>Avaiablable doctors </h3>
-           {% for i in show_doc %} {{i.id}}. Name :{{ i.username }} Dept: {{i.department}}
-        <br>
-        <hr>
-        {% endfor %}
+
+
         <form action="" method="post">
             <div class="form-group">
                 <input type="text" name="docName" class="form-control" placeholder="Enter Name">

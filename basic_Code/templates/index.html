@@ -1,21 +1,43 @@
 {% extends "layout.html"%}
 {% block content%}
 
-<h1>Upcoming Consulation</h1>
+
+<div class="row">
+    <div class="col-5">
+        <h2>Avaiable doctors</h2>
+        {% for i in show_doc %} {{i.id}}. Name :{{ i.username }} Dept: {{i.department}}
+        <br>
+        <hr>
+        {% endfor %}
+    </div>
+    <div class="col-7">
+        <h1>Upcoming Consulation</h1>
+        <div class="row index">
+            {% for i in myAppointments %}
+
+            <div class="col-5">
+                Dr {{ i.docName }} <br>
+                <img src="https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?size=338&ext=jpg"
+                     width="100" alt="">
+
+            </div>
+            <div class="col-6">
+                Date: {{i.date}} <br>
+                Time: {{i.time}} <br> Mode : {{i.mode}} <br>
+                <button type="button" class="btn btn-primary ">{{i.status}}
+                </button>
+            </div>
+            <br>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
 
 
-{% for i in myAppointments %} Dr {{ i.docName }} <br>
-<hr>
-Date: {{i.date}} <br>
-Time: {{i.time}} <br> Mode : {{i.mode}} <br>
-
-<button type="button" class="btn btn-primary ">{{i.status}}
-</button>
 <br>
 <br>
 <br>
-
-{% endfor %}
 
 
 {% endblock%}
