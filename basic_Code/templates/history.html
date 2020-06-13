@@ -38,7 +38,14 @@
         Given by {{f.doc_name}}
         <br>
         Medicine : {{f.medicines_to_be_taken}}
-        <br> <br> <br> <br>
+        <br>
+        <h4><b>Consultation Fees :  </b> {{f.consultation_fee}}</h4>
+        <button type="submit" class="btn btn-light " value="{{ f.patient_id }}">
+    <a href="https://pay.google.com"> Pay Now </a>
+</button>
+
+        <br>
+        <br> <br> <br>
         <hr>
           {% endfor %}
     </div>
