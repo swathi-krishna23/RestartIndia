@@ -1,0 +1,18 @@
+{% extends "layout.html"%} {% block content%}
+
+<h1>Show Appointments</h1>
+
+<ul>
+    <li>
+
+        {% for i in show_appointment %} {{i.id}}. Name :{{ i.docName }} <br> dep: {{i.department}} <br> {{i.date}} <br>
+        {{i.time}} <br> Mode : {{i.mode}} <br> By: {{i.createdby_id}} <br>status {{i.status}}
+        <br>
+        <hr>
+        {% endfor %}
+    </li>
+
+</ul>
+
+
+{% endblock%}

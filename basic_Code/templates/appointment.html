@@ -1,0 +1,60 @@
+{% extends "layout.html"%}
+{% block content%}
+
+<div class="row">
+
+    <div class="col-12">
+        <h1>Book appointment</h1>
+
+
+
+        <form action="" method="post">
+            <div class="form-group">
+                <input type="text" name="docName" class="form-control" placeholder="Enter Name">
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="department" class="form-control" placeholder="Enter department">
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <input id="datepicker" name="date" width="270" placeholder="Pick the date"/>
+                </div>
+                <div class="col-6">
+
+                    <input class="timepicker" name="time" id="event-time" type="text" value="" required="" width="270"
+                           placeholder="Pick the time">
+                </div>
+            </div>
+
+            <input type="radio" name="mode" id="offline" value="offline"> offline </input>
+            <input type="radio" name="mode" id="online" value="online"> online </input><br>
+
+            <button type="submit" class="btn btn-dark text-center">Add</button>
+        </form>
+    </div>
+
+</div>
+<!--Script-->
+<script src="Scripts/ClockPicker.js"></script>
+<script>
+   $('.timepicker').timepicker({
+     });
+
+
+</script>
+
+<script>
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap'
+        });
+
+
+
+
+</script>
+
+
+{% endblock%}
