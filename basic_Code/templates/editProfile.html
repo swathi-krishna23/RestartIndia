@@ -1,0 +1,47 @@
+{% extends "layout.html"%}
+{% block content%}
+
+<div class="row">
+
+    <div class="col-12">
+        <h1>Edit profile</h1>
+        <form action="" method="post">
+            <div class="form-group">
+                <input type="text" name="name" class="form-control" placeholder="Enter Full Name">
+            </div>
+
+            <div class="form-group">
+                <input type="number" name="contactNumber" class="form-control" placeholder="Enter contact number">
+            </div>
+
+            <div class="form-group">
+                <input type="number" name="age" class="form-control" placeholder="Enter age">
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="gender" class="form-control" placeholder="Enter gender">
+            </div>
+
+            <div class="form-group">
+                Blood group
+                <input type="radio" name="bloodGroup" id="A" value="A"> A </input>
+                <input type="radio" name="bloodGroup" id="B" value="B"> B </input>
+                <input type="radio" name="bloodGroup" id="AB" value="AB"> AB </input>
+                <input type="radio" name="bloodGroup" id="O" value="O"> O </input>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Family heredity disesaes</label>
+                <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" name="heredityIssues"
+                          rows="10"></textarea>
+            </div>
+
+
+            <button type="submit" class="btn btn-dark text-center">Add</button>
+        </form>
+    </div>
+
+</div>
+
+
+{% endblock%}
