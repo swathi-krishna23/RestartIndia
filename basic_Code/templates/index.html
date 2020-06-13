@@ -4,5 +4,18 @@
 <h1>Index</h1>
 
 
+{% for i in myAppointments %} Dr {{ i.docName }} <br>
+<hr>
+Date: {{i.date}} <br>
+Time: {{i.time}} <br> Mode : {{i.mode}} <br>
+
+<button type="button" class="btn btn-danger ">{{i.status}}
+</button>
+<br>
+<br>
+<br>
+
+{% endfor %}
+
 
 {% endblock%}

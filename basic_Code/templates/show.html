@@ -3,6 +3,7 @@
 <h1>Show</h1>
 
 <ul>
+    User
     <li>
 
         {% for i in show_user %} {{i.id}}. Name :{{ i.username }} <br> Password: {{i.password}}
@@ -10,7 +11,14 @@
         <hr>
         {% endfor %}
     </li>
+Doctor
+       <li>
 
+        {% for i in show_doc %} {{i.id}}. Name :{{ i.username }} <br> Password: {{i.password}}
+        <br>
+        <hr>
+        {% endfor %}
+    </li>
 </ul>
 
 

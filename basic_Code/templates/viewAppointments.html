@@ -1,25 +1,67 @@
-{% extends "layout.html"%} {% block content%}
+{% extends "doc_layout.html"%} {% block content%}
 
 <h1>Show</h1>
 
-<ul>
-    <li>
 
-        {% for i in myAppointments %} Dr {{ i.docName }}, {{i.createdby_name}} wants to book an appointment on
-        Date: {{i.date}} <br>
-        Time: {{i.time}} <br> Mode : {{i.mode}} <br>status {{i.status}}
-        <br>
-        <button type="button" class="btn btn-warning">Confirm</button>
-        <button type="button" class="btn btn-danger">Deny</button>
-        <br>
-        <hr>
-        {% endfor %}
-    </li>
+{% for i in myAppointments %} <b>{{i.id}}</b> . <br> Dr {{ i.docName }}, {{i.createdby_name}} wants to book an appointment on
+Date: {{i.date}} <br>
+Time: {{i.time}} <br> Mode : {{i.mode}} <br>status {{i.status}}
+<br>
 
-</ul>
+<button type="button" class="btn btn-warning " data-toggle="modal" data-target="#myModal">{{ i.id }}  Confirm</button>
+<button type="button" class="btn btn-danger " data-toggle="modal" data-target="#myModal2">Deny</button>
+
+<br>
+<hr>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Confirm appointment ?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default " value="{{ i.id }} ">
+                    <a href="{{ url_for('ConfirmAppointment', id=i.id) }}">Yes {{ i.id }} </a>
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Cancel appointment ?</p>
+            </div>
+            <div class="modal-footer">
+                 <button type="submit" class="btn btn-default " value="{{ i.id }} ">
+                    <a href="{{ url_for('CancelAppointment', id=i.id) }}">Yes </a>
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endfor %}
+
+
+<!-- Modal -->
 
 
 <h2>The end</h2>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
 {% endblock%}

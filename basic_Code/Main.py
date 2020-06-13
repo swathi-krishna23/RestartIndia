@@ -42,7 +42,7 @@ def login():
         return render_template('login.html')
     else:
         username = request.form['username']
-        password = hash(request.form['password'])
+        password = request.form['password']
         data = User.query.filter_by(username=username,
                                     password=password).first()
 
@@ -59,7 +59,7 @@ def login():
 def register():
     if request.method == 'POST':
         new_user = User(username=request.form['username'],
-                        password=hash(request.form['password']))
+                        password=request.form['password'])
 
         db.session.add(new_user)
         db.session.commit()
@@ -78,7 +78,8 @@ def logout():
 @app.route('/show')
 def show():
     show_user = User.query.all()
-    return render_template('show.html', show_user=show_user)
+    show_doc = Doctor.query.all()
+    return render_template('show.html', show_user=show_user,show_doc=show_doc)
 
 
 @app.route('/showAppointment')
@@ -95,8 +96,8 @@ def showAppointment():
 def index():
     username = User.query.get(session['user']).username
     print(username)
-    flash("welcome {}".format(username))
-    return render_template('index.html')
+    myAppointments = Appointment.query.filter_by(createdby_name=username).all()
+    return render_template('index.html',myAppointments=myAppointments)
 
 
 @app.route('/appointment', methods=['GET', 'POST'])
@@ -107,8 +108,7 @@ def appointment():
         new_appointment = Appointment(docName=request.form['docName'],
                                       department=request.form['department'],
                                       date=request.form['date'], time=request.form['time'], mode=request.form['mode'],
-                                      createdby_id=user_id, createdby_name=User.query.get(user_id).username
-)
+                                      createdby_id=user_id, createdby_name=User.query.get(user_id).username)
 
         db.session.add(new_appointment)
         db.session.commit()
@@ -127,7 +127,7 @@ def dlogin():
         return render_template('dlogin.html')
     else:
         username = request.form['username']
-        password = hash(request.form['password'])
+        password = request.form['password']
         data = Doctor.query.filter_by(username=username,
                                     password=password).first()
 
@@ -143,8 +143,7 @@ def dlogin():
 def dregister():
     if request.method == 'POST':
         new_user = Doctor(username=request.form['username'],
-                        password=hash(request.form['password']))
-
+                        password=request.form['password'])
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('dlogin'))
@@ -170,6 +169,26 @@ def viewAppointments():
     myAppointments = Appointment.query.filter_by(docName=docname).all()
     print(myAppointments)
     return render_template('viewAppointments.html', myAppointments=myAppointments)
+
+@app.route('/ConfirmAppointment')
+def ConfirmAppointment():
+    id = int(request.args['id'])
+    print('to be confirmed ', id)
+    confirm_appointment = Appointment.query.filter_by(id=id).one()
+    print(confirm_appointment)
+    confirm_appointment.status='Confirmed'
+    db.session.commit()
+    return redirect(url_for('dindex'))
+
+@app.route('/CancelAppointment')
+def CancelAppointment():
+    id = int(request.args['id'])
+    print('to be cancelled ', id)
+    CancelAppointment = Appointment.query.filter_by(id=id).one()
+    print(CancelAppointment)
+    CancelAppointment.status='Denied'
+    db.session.commit()
+    return redirect(url_for('dindex'))
 
 ######################################### MAIN ####################################
 
