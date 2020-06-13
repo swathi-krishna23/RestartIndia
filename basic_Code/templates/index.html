@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-5">
         <h2>Avaiable doctors</h2>
-        {% for i in show_doc %} {{i.id}}. Name :{{ i.username }} Dept: {{i.department}}
+        {% for i in show_doc %} <b>Name :{{ i.username }} </b><br> Dept: {{i.department}}
         <br>
         <hr>
         {% endfor %}

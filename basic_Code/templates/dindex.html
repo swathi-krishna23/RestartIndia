@@ -1,26 +1,30 @@
 {% extends "doc_layout.html"%}
 {% block content%}
 
-<h1>DOCTOR Index</h1>
 
 <h1>Upcoming Consulation</h1>
 
 
-{% for i in myAppointments %}
-Patient {{ i.createdby_name }} <br>
-<hr>
-Date: {{i.date}} <br>
-Time: {{i.time}} <br> Mode : {{i.mode}} <br>
+<div class="row index">
+
+        {% for i in myAppointments %}
+    <div class="col-3">
+        Patient {{ i.createdby_name }}
+        <hr>
+        <br>
+        Date: {{i.date}} <br>
+        Time: {{i.time}} <br> Mode : {{i.mode}} <br>
+        <button type="submit" class="btn btn-dark " value="{{ i.createdby_id }}">
+            <a href="{{ url_for('doc_view_history', id=i.createdby_id) }}"> View history</a>
+        </button>
+
+        <button type="submit" class="btn btn-light " value="{{ i.createdby_id }}">
+            <a href="{{ url_for('feedback', id=i.createdby_id) }}"> Give feeback</a>
+        </button>
+    </div>
+</div>
 
 
-<button type="submit" class="btn btn-dark " value="{{ i.createdby_id }}">
-    <a href="{{ url_for('doc_view_history', id=i.createdby_id) }}">  View history</a>
-</button>
-
-<button type="submit" class="btn btn-light " value="{{ i.createdby_id }}">
-    <a href="{{ url_for('feedback', id=i.createdby_id) }}">  Give feeback</a>
-</button>
-<br><br><br><br>
 {% endfor %}
 
 
