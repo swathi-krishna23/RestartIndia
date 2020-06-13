@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="/static/layout.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
 
 </head>
 
@@ -23,7 +28,11 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#">Book Appointment</a>
+            <a class="nav-link" href="/appointment">Book Appointment</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/logout" style="float:right;transform:translateX(700%)"> &nbsp Login out</a>
         </li>
     </ul>
 
@@ -46,6 +55,7 @@
     }
 
   $('#flashMessage').show().delay(50).fadeIn(200).delay(2000).fadeOut(400)
+
 
 </script>
 </html>
