@@ -1,6 +1,6 @@
 {% extends "doc_layout.html"%} {% block content%}
 
-<h1>Show</h1>
+<h1>Notifications</h1>
 
 
 {% for i in myAppointments %} <b>{{i.id}}</b> .
@@ -23,10 +23,6 @@ Time: {{i.time}} <br> Mode : {{i.mode}} <br>status {{i.status}}
 
 {% endfor %}
 
-
-
-
-<h2>The end</h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 

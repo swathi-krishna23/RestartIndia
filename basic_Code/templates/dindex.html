@@ -5,9 +5,10 @@
 <h1>Upcoming Consulation</h1>
 
 
-<div class="row index">
+
 
         {% for i in myAppointments %}
+<div class="row index">
     <div class="col-3">
         Patient {{ i.createdby_name }}
         <hr>
@@ -18,7 +19,7 @@
             <a href="{{ url_for('doc_view_history', id=i.createdby_id) }}"> View history</a>
         </button>
 
-        <button type="submit" class="btn btn-light " value="{{ i.createdby_id }}">
+        <button type="submit" class="btn btn btn-info" value="{{ i.createdby_id }}">
             <a href="{{ url_for('feedback', id=i.createdby_id) }}"> Give feeback</a>
         </button>
     </div>
