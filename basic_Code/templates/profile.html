@@ -1,0 +1,12 @@
+{% extends "layout.html"%} {% block content%}
+
+
+{% for i in Profile %} {{i.id}}. Name :{{ i.name }} <br> age: {{i.age}}  <br> gender: {{i.gender}}
+<br> bloodGroup: {{i.bloodGroup}}
+<br> heredityIssues: {{i.heredityIssues}} <br> contactNumber: {{i.contactNumber}}
+<br>
+<hr>
+{% endfor %}
+
+
+{% endblock%}

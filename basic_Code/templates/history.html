@@ -1,0 +1,55 @@
+{% extends "layout.html"%} {% block content%}
+
+
+
+<div class="row" >
+
+    <div class="col-4" >
+       <div style="border-top: 3px solid black;">
+            <h1>Disease</h1>
+        {% for h in diseases %}
+        Description {{h.desc}}
+        Allergies {{h.allergy}}
+        {% endfor %}
+       </div>
+
+    </div>
+    <div class="col-4" >
+      <div  style="border-top: 3px solid yellow;">
+            <h1>Medicine</h1>
+    <div>
+            {% for m in medicines %}
+        Name {{m.name}}
+        <br>
+        Dose {{m.dose}}
+        <br>
+        status : {{m.medicine}}
+        <br> <br> <br> <br>
+        <hr>
+        {% endfor %}
+      </div>
+    </div>
+    </div>
+    <div class="col-4" style="border-top: 4px solid #EC4849;">
+         <h1>Previous feedbacks</h1>
+        {% for f in feedback %}
+        Feedback {{f.feedback}}
+        <br>
+        Given by {{f.doc_name}}
+        <br>
+        Medicine : {{f.medicines_to_be_taken}}
+        <br>
+        <h4><b>Consultation Fees :  </b> {{f.consultation_fee}}</h4>
+        <button type="submit" class="btn btn-light " value="{{ f.patient_id }}">
+    <a href="https://pay.google.com"> Pay Now </a>
+</button>
+
+        <br>
+        <br> <br> <br>
+        <hr>
+          {% endfor %}
+    </div>
+</div>
+
+
+{% endblock%}
